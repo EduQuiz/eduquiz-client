@@ -9,26 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^1.6.2",
+    "@biomejs/biome": "^1.7.3",
+    "axios": "^1.6.8",
     "clipboard": "^2.0.11",
-    "flowbite": "^2.0.0",
-    "flowbite-react": "^0.6.4",
-    "next": "13.5.4",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.9.0",
+    "next": "14.2.3",
     "nookies": "^2.5.2",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^4.12.0"
+    "react-icons": "^5.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
-    "daisyui": "^3.9.4",
-    "eslint": "^8",
-    "eslint-config-next": "13.5.4",
+    "daisyui": "^4.10.5",
     "postcss": "^8",
     "tailwindcss": "^3",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "npm@10.7.0+sha512.157ca5c98497363817c7797cd814fc45242f0a818843787c61d44518a36fa373effdb2ac70ae29756931fe89f04e91c3a86c3ea1e2dfe11c659fd595cb103195"
 }
