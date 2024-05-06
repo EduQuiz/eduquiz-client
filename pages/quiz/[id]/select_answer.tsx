@@ -45,7 +45,7 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
 
     // Atualiza o localStorage com o novo array de respostas
     localStorage.setItem("respostas", JSON.stringify(respostasArmazenadas));
-    if (cont == perguntas.length - 1) {
+    if (cont === perguntas.length - 1) {
       router.push("/congratulations");
     } else {
       setCont(cont + 1);

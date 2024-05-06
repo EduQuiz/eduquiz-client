@@ -82,7 +82,7 @@ export default function ModalCreateQuiz(props: Props) {
         respostas: respostas.filter((resposta) => resposta.description),
       };
 
-      if (props.tipo == "create") {
+      if (props.tipo === "create") {
         const resp = await axios.post(
           "http://localhost:4000/pergunta",
           perguntaSubmit,
@@ -145,7 +145,7 @@ export default function ModalCreateQuiz(props: Props) {
           onChange={(e) =>
             setPergunta({ ...pergunta, description: e.target.value })
           }
-        ></textarea>
+        />
       </div>
       <div className="w-full flex justify-between align-center gap-2 flex-col">
         {respostas.map((resposta, index) => (

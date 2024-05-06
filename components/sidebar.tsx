@@ -2,7 +2,7 @@ import { HiChartPie } from "react-icons/hi";
 import { HiBars3 } from "react-icons/hi2";
 import { MdCloud, MdQuiz, MdSchema } from "react-icons/md";
 
-export default function Sidebar({ children }: any) {
+export default function Sidebar({ children }) {
   return (
     <div className="drawer sm:drawer-open ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -26,7 +26,7 @@ export default function Sidebar({ children }: any) {
           htmlFor="my-drawer-2"
           aria-label="close sidebar"
           className="drawer-overlay"
-        ></label>
+        />
         <aside
           id="sidebar-multi-level-sidebar"
           className=" z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"

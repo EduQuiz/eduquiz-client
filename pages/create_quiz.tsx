@@ -38,7 +38,6 @@ export default function CreateQuiz() {
           .data;
         console.log(resp);
         setProviderPerguntas(resp);
-        console.log(providerPerguntas);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -75,7 +74,7 @@ export default function CreateQuiz() {
   function handleProviderPerguntas() {
     const perguntasId: string[] = [];
 
-    providerPerguntas?.forEach((pergunta) => {
+    providerPerguntas?.map((pergunta) => {
       perguntasId.push(pergunta.id);
     });
 
@@ -154,7 +153,7 @@ export default function CreateQuiz() {
           value={quizDescription}
           onChange={(e) => setQuizDescription(e.target.value)}
           className="textarea textarea-bordered h-24"
-        ></textarea>
+        />
       </div>
       <div className="flex flex-row gap-6">
         <div className="form-control w-full">

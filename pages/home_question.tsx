@@ -118,7 +118,7 @@ export default function HomeQuestion() {
             htmlFor="my-drawer-4"
             aria-label="close sidebar"
             className="drawer-overlay"
-          ></label>
+          />
           <ul className="menu w-fit min-h-full bg-gray-800 text-base-content">
             <ModalCreateQuiz
               tipo="update"
@@ -129,7 +129,7 @@ export default function HomeQuestion() {
               titleForms="Editar pergunta"
               modal={true}
               onClose={handleModalSubmit}
-            ></ModalCreateQuiz>
+            />
           </ul>
         </div>
       </div>

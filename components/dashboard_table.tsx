@@ -19,7 +19,7 @@ export default function DashboardTable(props: DashboardTableProps) {
             <th>Name</th>
             <th>Job</th>
             <th>Favorite Color</th>
-            <th></th>
+            <th />
           </tr>
         </thead>
         <tbody>
