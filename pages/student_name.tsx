@@ -1,14 +1,14 @@
+import { useRouter } from "next/router";
 // pages/codigo.tsx
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from "react";
 
 export default function Codigo() {
   const router = useRouter();
-  const [codigo, setCodigo] = useState('');
+  const [codigo, setCodigo] = useState("");
 
   const handleNext = () => {
     // Lógica para avançar para a próxima página
-    router.push('/proxima-pagina');
+    router.push("/proxima-pagina");
   };
 
   return (
