@@ -116,7 +116,7 @@ export default function ModalCreateQuiz(props: Props) {
             onClick={() => {
               props.onClose();
             }}
-          ></IoMdCloseCircleOutline>
+          />
         )}
       </div>
       <div className="w-full flex justify-between align-center gap-12">
@@ -161,7 +161,7 @@ export default function ModalCreateQuiz(props: Props) {
                 value={resposta.description}
                 className="textarea text-xs textarea-bordered h-24"
                 onChange={(e) => handleRespostaChange(index, e.target.value)}
-              ></textarea>
+              />
             </div>
             <div className="form-control self-end">
               <label className="label cursor-pointer">

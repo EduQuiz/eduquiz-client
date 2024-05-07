@@ -9,7 +9,11 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const { user_id } = parseCookies();
 
-    if (!user_id && Component.name != "Login" && Component.name != "Register") {
+    if (
+      !user_id &&
+      Component.name !== "Login" &&
+      Component.name !== "Register"
+    ) {
       document.location = "/login";
     }
   });

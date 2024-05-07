@@ -39,7 +39,7 @@ export default function Home({ data }: HomeProps) {
         <AiOutlinePlusCircle
           style={{ color: "#03A4FF" }}
           className="w-10 h-10 justify-end right-6 top-6 text-blue-500 cursor-pointer"
-        ></AiOutlinePlusCircle>
+        />
       </Link>
       <div className="w-full my-10 grid gap-y-12 gap-x-12 2xl:grid-cols-3 xl:grid-cols-2 justify-center">
         {data &&
@@ -57,7 +57,7 @@ export default function Home({ data }: HomeProps) {
 }
 
 export async function getServerSideProps() {
-  let data;
+  let data: any;
   try {
     data = (await axios.get("http://localhost:4000/quizzes")).data;
   } catch (error) {
