@@ -1,5 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+/** @type {import("next").NextConfig} */
+export default {
   reactStrictMode: true,
 
   // https://nextjs.org/docs/api-reference/next.config.js/rewrites
@@ -23,5 +23,3 @@ const nextConfig = {
     ];
   },
 };
-
-module.exports = nextConfig;
