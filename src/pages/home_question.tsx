@@ -52,7 +52,7 @@ export default function HomeQuestion() {
   function onDelete(id: string) {
     return async () => {
       try {
-        const resp = await axios.delete("http://localhost:4000/pergunta/" + id);
+        const resp = await axios.delete(`http://localhost:4000/pergunta/${id}`);
         console.log(resp);
         if (resp.status === 200) {
           await getPerguntas();

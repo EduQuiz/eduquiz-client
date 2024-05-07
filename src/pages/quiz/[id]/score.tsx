@@ -49,7 +49,7 @@ export default function Score(props: ScoreProps) {
   );
 }
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context) {
   let data = null;
 
   try {

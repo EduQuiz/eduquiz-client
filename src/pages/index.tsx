@@ -57,7 +57,7 @@ export default function Home({ data }: HomeProps) {
 }
 
 export async function getServerSideProps() {
-  let data: any;
+  let data: [];
   try {
     data = (await axios.get("http://localhost:4000/quizzes")).data;
   } catch (error) {

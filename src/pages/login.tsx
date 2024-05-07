@@ -11,7 +11,7 @@ export default function Login() {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
 
-  async function submitLogin(event: any) {
+  async function submitLogin(event) {
     event.preventDefault();
     const { id, nome } = (
       await axios.post("http://localhost:4000/user/login", {

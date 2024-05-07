@@ -7,7 +7,7 @@ export default function Congratulations() {
   const respostasArmazenadas = JSON.parse(
     localStorage.getItem("respostas") || "[]",
   );
-  const corretas = respostasArmazenadas.filter((r: any) => r).length;
+  const corretas = respostasArmazenadas.filter((r) => r).length;
   const nome = parseCookies().user_name;
 
   useEffect(() => {

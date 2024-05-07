@@ -168,12 +168,11 @@ export default function CreateQuiz() {
             <option value={0} disabled>
               Selecione uma pergunta
             </option>
-            {providerPerguntas &&
-              providerPerguntas?.map((question) => (
-                <option value={question.id} key={question.id}>
-                  {question.titulo}
-                </option>
-              ))}
+            {providerPerguntas?.map((question) => (
+              <option value={question.id} key={question.id}>
+                {question.titulo}
+              </option>
+            ))}
           </select>
         </div>
         <button className="btn btn-primary self-end" onClick={onAdd}>

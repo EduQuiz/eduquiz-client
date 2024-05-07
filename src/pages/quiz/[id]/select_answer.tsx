@@ -32,7 +32,7 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
     localStorage.setItem("quizId", JSON.stringify(id));
   }, [id]);
 
-  function responder(event: any) {
+  function responder(event) {
     const valorResposta = event.target.dataset.value === "true";
 
     // Recupera as respostas armazenadas no localStorage ou um array vazio se ainda não houver respostas
