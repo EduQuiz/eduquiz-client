@@ -9,4 +9,4 @@ jobs:
         with:
           node-version: "latest"
       - run: npm ci
-      - run: npm build
+      - run: node --run build
