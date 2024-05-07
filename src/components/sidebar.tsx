@@ -1,4 +1,4 @@
-import { Link } from "next/link";
+import Link from "next/link";
 
 import { HiChartPie } from "react-icons/hi";
 import { HiBars3 } from "react-icons/hi2";

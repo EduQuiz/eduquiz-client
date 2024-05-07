@@ -1,14 +1,20 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Congratulations() {
+  const [respostasArmazenadas, setRespostasArmazenadas] = useState([]);
+  const [nome, setNome] = useState("");
+  const [corretas, setCorretas] = useState(0);
+
   // Recupera as respostas armazenadas no localStorage ou um array vazio se ainda não houver respostas
-  const respostasArmazenadas = JSON.parse(
-    localStorage.getItem("respostas") || "[]",
-  );
-  const corretas = respostasArmazenadas.filter((r) => r).length;
-  const nome = parseCookies().user_name;
+  useEffect(() => {
+    setRespostasArmazenadas(
+      JSON.parse(localStorage.getItem("respostas") || "[]"),
+    );
+    setCorretas(respostasArmazenadas.filter((r) => r).length);
+    setNome(parseCookies().user_name);
+  }, [respostasArmazenadas]);
 
   useEffect(() => {
     async function save() {
