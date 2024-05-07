@@ -1,5 +1,7 @@
+import { Image } from "next/image";
+import { Link } from "next/link";
+
 import ClipboardJS from "clipboard";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 interface Props {
@@ -35,7 +37,7 @@ export default function CardQuiz(props: Props) {
   return (
     <div className="card card-compact w-96 bg-base-100 shadow-xl min-w-[28rem]">
       <figure>
-        <img
+        <Image
           className="object-cover w-full h-48 rounded-t-lg"
           src="https://source.unsplash.com/random"
           alt={props.title}

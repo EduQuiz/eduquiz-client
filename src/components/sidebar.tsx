@@ -1,3 +1,5 @@
+import { Link } from "next/link";
+
 import { HiChartPie } from "react-icons/hi";
 import { HiBars3 } from "react-icons/hi2";
 import { MdCloud, MdQuiz, MdSchema } from "react-icons/md";
@@ -35,17 +37,17 @@ export default function Sidebar({ children }) {
           <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
             <ul className="space-y-2 font-medium">
               <li>
-                <a
+                <Link
                   href="/"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <HiChartPie className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
 
                   <span className="ml-3">Pagina inicial</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/create_quiz"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
@@ -55,10 +57,10 @@ export default function Sidebar({ children }) {
                     }
                   />
                   <span className="ml-3">Criar quiz</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/create_question"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
@@ -68,10 +70,10 @@ export default function Sidebar({ children }) {
                     }
                   />
                   <span className="ml-3">Criar pergunta</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/home_question"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
@@ -81,7 +83,7 @@ export default function Sidebar({ children }) {
                     }
                   />
                   <span className="ml-3">Minhas perguntas</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

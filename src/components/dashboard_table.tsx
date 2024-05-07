@@ -1,3 +1,5 @@
+import { Image } from "next/image";
+
 interface DashboardTableProps {
   className?: string;
   persons?: Person[];
@@ -32,7 +34,7 @@ export default function DashboardTable(props: DashboardTableProps) {
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
                       <div className="mask mask-squircle w-12 h-12">
-                        <img
+                        <Image
                           src={"https://source.unsplash.com/random/800x600"}
                           alt="avatar"
                         />

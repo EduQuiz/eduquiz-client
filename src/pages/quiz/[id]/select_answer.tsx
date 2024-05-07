@@ -30,7 +30,7 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
     localStorage.clear();
     //salva o id do quiz
     localStorage.setItem("quizId", JSON.stringify(id));
-  }, []);
+  }, [id]);
 
   function responder(event: any) {
     const valorResposta = event.target.dataset.value === "true";

@@ -20,7 +20,8 @@ export default function Congratulations() {
     }
 
     save();
-  }, []);
+  }, [corretas]);
+
   return (
     <div className="w-full h-full relative overflow-hidden">
       <div className="flex w-full h-[10%] border-b border-gray-500">
