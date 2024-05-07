@@ -1,0 +1,5 @@
+.table :where(thead, tbody) :where(tr:not(:last-child)){
+    border-bottom-width: 0 !important;
+    --tw-border-opacity: 1;
+    border-bottom-color: hsl(var(--b2) / var(--tw-border-opacity))
+}
