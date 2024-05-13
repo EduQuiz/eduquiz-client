@@ -120,7 +120,7 @@ export default function CreateQuiz() {
       )}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Criar novo Quiz</h1>
-        <button className="btn btn-primary" onClick={onSubmit}>
+        <button className="btn btn-primary" onClick={onSubmit} type="button">
           Salvar
         </button>
       </div>
@@ -175,7 +175,11 @@ export default function CreateQuiz() {
             ))}
           </select>
         </div>
-        <button className="btn btn-primary self-end" onClick={onAdd}>
+        <button
+          className="btn btn-primary self-end"
+          onClick={onAdd}
+          type="button"
+        >
           Adicionar
         </button>
       </div>
@@ -197,6 +201,7 @@ export default function CreateQuiz() {
                     <button
                       className="btn btn-error btn-xs"
                       onClick={onDeletePergunta(question)}
+                      type="button"
                     >
                       delete
                     </button>

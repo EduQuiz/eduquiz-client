@@ -42,15 +42,14 @@ export default function Home({ data }: HomeProps) {
         />
       </Link>
       <div className="w-full my-10 grid gap-y-12 gap-x-12 2xl:grid-cols-3 xl:grid-cols-2 justify-center">
-        {data &&
-          data.map((question, index) => (
-            <CardQuiz
-              key={index}
-              id={question.id}
-              title={question.nome}
-              description={question.descricao}
-            />
-          ))}
+        {data?.map((question, index) => (
+          <CardQuiz
+            key={question.id}
+            id={question.id}
+            title={question.nome}
+            description={question.descricao}
+          />
+        ))}
       </div>
     </div>
   );

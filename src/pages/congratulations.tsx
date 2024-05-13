@@ -42,11 +42,11 @@ export default function Congratulations() {
         sua pontuação: {corretas}
       </div>
       <div className="flex h-full items-center justify-center">
-        <div className={`w-[5%] h-full mt-[10%]`}>
+        <div className="w-[5%] h-full mt-[10%]">
           <div className="text-center text-white text-[40px] font-['Lexend Deca']">
             {corretas * 10}
           </div>
-          <div className=" flex w-full h-full bg-amber-300 rounded-lg "></div>
+          <div className="flex w-full h-full bg-amber-300 rounded-lg" />
         </div>
       </div>
     </div>

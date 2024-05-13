@@ -37,7 +37,7 @@ export default function Score(props: ScoreProps) {
                 className={index % 2 === 0 ? "bg-base-200" : "bg-base-100"}
               >
                 <td>{score.Usuario.nome}</td>
-                <td></td>
+                <td />
                 <td>{score.pontuacao}</td>
                 <td>{score.pontuacao / 10}</td>
               </tr>

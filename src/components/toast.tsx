@@ -33,6 +33,7 @@ export default function Toast(props: ToastProps) {
         show ? "show" : ""
       }`}
       onClick={() => setShow(false)}
+      onKeyDown={() => setShow(false)}
     >
       <div className={`alert ${props.type}`}>
         <span>{props.title}</span>

@@ -75,7 +75,9 @@ export default function HomeQuestion() {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Perguntas</h1>
         <Link href="/create_question" legacyBehavior>
-          <button className="btn btn-primary">Criar pergunta</button>
+          <button className="btn btn-primary" type="button">
+            Criar pergunta
+          </button>
         </Link>
       </div>
       <div className="overflow-auto">
@@ -96,12 +98,14 @@ export default function HomeQuestion() {
                     htmlFor="my-drawer-4"
                     className="btn btn-ghost btn-xs"
                     onClick={() => onEdit(question)}
+                    onKeyDown={() => onEdit(question)}
                   >
                     details
                   </label>
                   <button
                     className="btn btn-error btn-xs"
                     onClick={onDelete(question.id)}
+                    type="button"
                   >
                     delete
                   </button>

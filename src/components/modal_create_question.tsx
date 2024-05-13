@@ -150,7 +150,7 @@ export default function ModalCreateQuiz(props: Props) {
       <div className="w-full flex justify-between align-center gap-2 flex-col">
         {respostas.map((resposta, index) => (
           <div
-            key={index}
+            key={resposta.id}
             className="w-full flex justify-between align-center gap-12"
           >
             <div className="form-control w-full max-w-full">
@@ -179,6 +179,7 @@ export default function ModalCreateQuiz(props: Props) {
         <button
           className="btn btn-primary self-end w-[100px] mt-8"
           onClick={onSubmit}
+          type="button"
         >
           Salvar
         </button>
