@@ -84,31 +84,35 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
       </div>
       <div className="grid grid-cols-2 gap-x-3 gap-y-3 justify-center h-1/2 w-2/3 mt-16">
         <div
-          className={`flex w-full  rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900  hover:border-white hover:cursor-pointer`}
+          className="flex w-full  rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900  hover:border-white hover:cursor-pointer"
           data-value={perguntas[cont].respostas[0].resultado}
           onClick={responder}
+          onKeyDown={responder}
         >
           {perguntas[cont].respostas[0].description}
         </div>
         <div
-          className={`flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer`}
+          className="flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer"
           data-value={perguntas[cont].respostas[1].resultado}
           onClick={responder}
+          onKeyDown={responder}
         >
           {perguntas[cont].respostas[1].description}
         </div>
 
         <div
-          className={`flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer`}
+          className="flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer"
           data-value={perguntas[cont].respostas[2].resultado}
           onClick={responder}
+          onKeyDown={responder}
         >
           {perguntas[cont].respostas[2].description}
         </div>
         <div
-          className={`flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer`}
+          className="flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer"
           data-value={perguntas[cont].respostas[3].resultado}
           onClick={responder}
+          onKeyDown={responder}
         >
           {perguntas[cont].respostas[3].description}
         </div>
@@ -118,7 +122,7 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
   );
 }
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context) {
   const resp = (
     await axios.get(`http://localhost:4000/pergunta/all/${context.query.id}`)
   ).data;

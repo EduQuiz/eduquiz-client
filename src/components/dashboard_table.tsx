@@ -15,7 +15,6 @@ export default function DashboardTable(props: DashboardTableProps) {
   return (
     <div className={` ${props.className}`}>
       <table className="table">
-        {/* head */}
         <thead>
           <tr>
             <th>Name</th>
@@ -25,11 +24,9 @@ export default function DashboardTable(props: DashboardTableProps) {
           </tr>
         </thead>
         <tbody>
-          {/* row 1 */}
-
           {props.persons?.map((person, index) => {
             return (
-              <tr key={index}>
+              <tr key={person.name}>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
@@ -55,7 +52,9 @@ export default function DashboardTable(props: DashboardTableProps) {
                 </td>
                 <td>{person.favoriteColor}</td>
                 <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
+                  <button className="btn btn-ghost btn-xs" type="button">
+                    details
+                  </button>
                 </th>
               </tr>
             );

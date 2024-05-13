@@ -51,13 +51,15 @@ export default function CardQuiz(props: Props) {
         <p>{props.description}</p>
         <div className="card-actions justify-end">
           <Link href="/quiz/[id]/score" as={`/quiz/${props.id}/score`}>
-            <button className="btn btn-primary">Visualizar</button>
+            <button className="btn btn-primary" type="button">
+              Visualizar
+            </button>
           </Link>
 
           <Link
             href={`https://wa.me/?text=http://localhost:3000/quiz/${props.id}/select_answer`}
           >
-            <button onClick={copie} className="btn btn-primary">
+            <button onClick={copie} className="btn btn-primary" type="button">
               Compartilhar
             </button>
           </Link>
