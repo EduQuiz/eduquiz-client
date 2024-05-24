@@ -11,7 +11,7 @@
     "biome": "biome check --apply src"
   },
   "dependencies": {
-    "axios": "^1.7.1",
+    "axios": "^1.7.2",
     "clipboard": "^2.0.11",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.9.0",
@@ -34,5 +34,5 @@
     "tailwindcss": "^3",
     "typescript": "^5"
   },
-  "packageManager": "npm@10.7.0+sha512.157ca5c98497363817c7797cd814fc45242f0a818843787c61d44518a36fa373effdb2ac70ae29756931fe89f04e91c3a86c3ea1e2dfe11c659fd595cb103195"
+  "packageManager": "npm@10.8.0+sha512.c21f77b91733829ec70e73cc88b5dc0a4bf685a81d252d3327d293ff7d5dd05a173f4dbeaa037600ec29696f397f14569229e5dab10b7cfc3e0a30575b8f3f8d"
 }
