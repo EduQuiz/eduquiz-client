@@ -32,7 +32,7 @@ export default function Congratulations() {
     <div className="w-full h-full relative overflow-hidden">
       <div className="flex w-full h-[10%] border-b border-gray-500">
         <span className="px-4 text-[32px] text-white font-['Lexend Deca']">
-          Educa7
+          EduQuiz
         </span>
       </div>
       <div className="text-center text-white text-[32px] font-['Lexend Deca'] mt-[3%]">

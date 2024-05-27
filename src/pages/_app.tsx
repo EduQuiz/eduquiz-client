@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
+
 import Sidebar from "@/components/sidebar";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useEffect } from "react";
 
@@ -10,11 +10,9 @@ export default function App({ Component, pageProps }: AppProps) {
     const { user_id } = parseCookies();
   }, []);
 
-  /*
-  if (Component.name === "Login" || Component.name === "Register") {
+  if (Component.name === "Entrar" || Component.name === "Registrar") {
     return <Component {...pageProps} />;
   }
-  */
 
   return (
     <Sidebar>

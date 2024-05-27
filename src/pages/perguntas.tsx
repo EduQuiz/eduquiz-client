@@ -1,7 +1,11 @@
 import axios from "axios";
+
 import Link from "next/link";
+
 import { useEffect, useState } from "react";
+
 import ModalCreateQuiz from "../components/modal_create_question";
+
 interface Pergunta {
   id: string;
   titulo: string;
@@ -14,7 +18,8 @@ interface Resposta {
   description: string;
   resultado: boolean;
 }
-export default function HomeQuestion() {
+
+export default function Perguntas() {
   const [providerTablePerguntas, setProviderTablePerguntas] = useState<
     Pergunta[]
   >([]);

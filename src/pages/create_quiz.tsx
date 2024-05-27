@@ -91,12 +91,19 @@ export default function CreateQuiz() {
       perguntas: providerPerguntasId,
     };
 
-    console.log(newQuiz);
     if (newQuiz.perguntas.length > 0) {
-      axios.post("http://localhost:4000/quizzes/create", newQuiz);
+      // console.log(newQuiz);
+      // axios.post("http://localhost:4000/quizzes/create", newQuiz);
+      const res = fetch("http://localhost:4000/quizzes/create", {
+        method: "POST",
+        body: JSON.stringify(newQuiz),
+      }).then((data) => {
+        console.log(data);
+      });
+      // console.log(res);
       window.location.href = "/";
     } else {
-      // mensagem de erro
+      console.log("erro ao criar questionário");
     }
   }
 
@@ -119,7 +126,7 @@ export default function CreateQuiz() {
         />
       )}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Criar novo Quiz</h1>
+        <h1 className="text-2xl font-bold">Criar novo questionário</h1>
         <button className="btn btn-primary" onClick={onSubmit} type="button">
           Salvar
         </button>

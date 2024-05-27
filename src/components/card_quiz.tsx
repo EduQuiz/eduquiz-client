@@ -1,6 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import ClipboardJS from "clipboard";
 
@@ -11,11 +9,6 @@ interface Props {
 }
 
 export default function CardQuiz(props: Props) {
-  const router = useRouter();
-  const handleViewClick = () => {
-    const queryParams = { id: props.id };
-  };
-
   async function copie() {
     const clipboard = new ClipboardJS(".btn-copiar", {
       text: () => `http://localhost:3000/quiz/${props.id}/select_answer`,
@@ -36,13 +29,6 @@ export default function CardQuiz(props: Props) {
 
   return (
     <div className="card card-compact w-96 bg-base-100 shadow-xl min-w-[28rem]">
-      <figure>
-        <Image
-          className="object-cover w-full h-48 rounded-t-lg"
-          src="https://source.unsplash.com/random"
-          alt={props.title}
-        />
-      </figure>
       <div className="card-body">
         <div className="flex justify-between">
           <h2 className="card-title">{props.title}</h2>

@@ -95,7 +95,7 @@ export default function ModalCreateQuiz(props: Props) {
       }
 
       props.onClose();
-      window.location.href = "/home_question";
+      window.location.href = "/perguntas";
       // toastEmitted(["Pergunta salvada com sucesso"], "success");
     } else {
       // toastEmitted(["Selecione uma resposta correta"], "warning");

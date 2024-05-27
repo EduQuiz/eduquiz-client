@@ -2,7 +2,21 @@ import Link from "next/link";
 
 import { HiChartPie } from "react-icons/hi";
 import { HiBars3 } from "react-icons/hi2";
-import { MdCloud, MdQuiz, MdSchema } from "react-icons/md";
+import { MdCloud, MdLogout, MdQuiz } from "react-icons/md";
+
+const iconStyle =
+  "w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white";
+
+const El = ({ href, children }) => {
+  return (
+    <Link
+      href={href}
+      className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+    >
+      {children}
+    </Link>
+  );
+};
 
 export default function Sidebar({ children }) {
   return (
@@ -56,7 +70,7 @@ export default function Sidebar({ children }) {
                       "w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     }
                   />
-                  <span className="ml-3">Criar quiz</span>
+                  <span className="ml-3">Criar questionário</span>
                 </Link>
               </li>
               <li>
@@ -74,7 +88,7 @@ export default function Sidebar({ children }) {
               </li>
               <li>
                 <Link
-                  href="/home_question"
+                  href="/perguntas"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <MdCloud
@@ -84,6 +98,12 @@ export default function Sidebar({ children }) {
                   />
                   <span className="ml-3">Minhas perguntas</span>
                 </Link>
+              </li>
+              <li>
+                <El href="/sair">
+                  <MdLogout className={iconStyle} />
+                  <span className="ml-3">Sair</span>
+                </El>
               </li>
             </ul>
           </div>
