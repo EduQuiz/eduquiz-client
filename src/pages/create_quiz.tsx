@@ -119,7 +119,7 @@ export default function CreateQuiz() {
         />
       )}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Criar novo Quiz</h1>
+        <h1 className="text-2xl font-bold">Criar novo questionário</h1>
         <button className="btn btn-primary" onClick={onSubmit} type="button">
           Salvar
         </button>

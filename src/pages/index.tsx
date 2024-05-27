@@ -18,9 +18,11 @@ export default function Home({ data }: HomeProps) {
     return (
       <div className="w-full px-12">
         <div className="w-full my-10 justify-center flex space-x-6 h-screen items-center ">
-          <h1 className="text-2xl text-center">Nenhum quiz encontrado</h1>
+          <h1 className="text-2xl text-center">
+            Nenhum questionário encontrado
+          </h1>
           <Link href="/create_quiz">
-            <div className="btn btn-primary">Criar quiz</div>
+            <div className="btn btn-primary">Criar questionário</div>
           </Link>
         </div>
       </div>
