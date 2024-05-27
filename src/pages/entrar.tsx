@@ -1,11 +1,11 @@
 import Toast from "@/components/toast";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import axios from "axios";
 import Link from "next/link";
 import { setCookie } from "nookies";
 
-export default function Login() {
+export default function Entrar() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -27,6 +27,9 @@ export default function Login() {
       setCookie(undefined, "user_name", nome, {
         maxAge: 60 * 30 * 1, // half hour
       });
+
+      setCookie(undefined, "usuario", id);
+
       document.location = "/";
     } else {
       setErrorText("Usuario ou senha incorreto.");
@@ -47,10 +50,13 @@ export default function Login() {
           onClose={() => setError(false)}
         />
       )}
+
       <h1 className={"text-6xl font-bold font-LexendDeca text-white"}>
-        Educa7
+        EduQuiz
       </h1>
+
       <p>Faça seu login e comece a planejar suas aulas!</p>
+
       <form className={"flex flex-col gap-4"} onSubmit={submitLogin}>
         <input
           type="text"
@@ -59,6 +65,7 @@ export default function Login() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+
         <input
           type="password"
           placeholder="Senha"
@@ -66,9 +73,11 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Link href={"/register"}>
+
+        <Link href={"/registrar"}>
           <div className={"text-blue-500 hover:link"}>Registre-se</div>
         </Link>
+
         <button
           type="submit"
           className={"w-72 py-2 rounded-md bg-[#20DF7F] text-white"}

@@ -17,15 +17,9 @@ export default function Home({ data }: HomeProps) {
   if (data.length === 0) {
     return (
       <div className="w-full px-12">
-        <Link href="/create_quiz" legacyBehavior className={"flex justify-end"}>
-          <AiOutlinePlusCircle
-            style={{ color: "#03A4FF" }}
-            className="w-10 h-10 justify-end right-6 top-6 text-blue-500 cursor-pointer"
-          />
-        </Link>
         <div className="w-full my-10 justify-center flex space-x-6 h-screen items-center ">
           <h1 className="text-2xl text-center">Nenhum quiz encontrado</h1>
-          <Link href={"/create_quiz"}>
+          <Link href="/create_quiz">
             <div className="btn btn-primary">Criar quiz</div>
           </Link>
         </div>

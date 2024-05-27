@@ -92,7 +92,7 @@ export default function Codigo() {
         }
       `}</style>
       <div className="codigo-container">
-        <div className="company-name">Educa7</div>
+        <div className="company-name">EduQuiz</div>
         <div className="login-text">Escolha um nome para ser seu!</div>
         <form>
           <div className="form-group">
