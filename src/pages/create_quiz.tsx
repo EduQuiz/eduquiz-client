@@ -92,16 +92,18 @@ export default function CreateQuiz() {
     };
 
     if (newQuiz.perguntas.length > 0) {
-      // console.log(newQuiz);
       // axios.post("http://localhost:4000/quizzes/create", newQuiz);
       const res = fetch("http://localhost:4000/quizzes/create", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(newQuiz),
       }).then((data) => {
         console.log(data);
+        window.location.href = "/";
       });
       // console.log(res);
-      window.location.href = "/";
     } else {
       console.log("erro ao criar questionário");
     }
