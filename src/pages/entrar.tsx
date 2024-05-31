@@ -1,9 +1,8 @@
 import Toast from "@/components/toast";
-import { useState } from "react";
-
 import axios from "axios";
 import Link from "next/link";
 import { setCookie } from "nookies";
+import { useState } from "react";
 
 export default function Entrar() {
   const [username, setUsername] = useState("");

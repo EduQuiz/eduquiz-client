@@ -1,6 +1,6 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Congratulations() {
   const [respostasArmazenadas, setRespostasArmazenadas] = useState([]);

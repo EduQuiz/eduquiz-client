@@ -1,8 +1,6 @@
-import { useEffect } from "react";
-
 import { useRouter } from "next/router";
-
 import { destroyCookie } from "nookies";
+import { useEffect } from "react";
 
 export const Sair = () => {
   const router = useRouter();
