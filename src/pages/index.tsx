@@ -20,7 +20,7 @@ export default function Home() {
     })();
   }, []);
 
-  if (data.length === 0) {
+  if (data?.length === 0) {
     return (
       <div className="w-full px-12">
         <div className="w-full my-10 justify-center flex space-x-6 h-screen items-center ">
