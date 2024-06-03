@@ -20,23 +20,44 @@ interface QuestionarioSchema {
   description: string;
 }
 
-const Resposta: React.FC<{ resposta: RespostaSchema }> = ({ resposta }) => (
-  <pre>{JSON.stringify(resposta.descricao)}</pre>
-);
+const Resposta: React.FC<{
+  descricao: string;
+  selecionar: () => void;
+  selecionada: boolean;
+}> = ({ descricao, selecionar, selecionada }) => {
+  const style = selecionada
+    ? "p-7 hover:bg-black hover:text-white border-2 hover:border-white bg-grey-900 border-green-500 mx-3 rounded"
+    : "p-7 hover:bg-black hover:text-white border-2 hover:border-white bg-grey-500 border-violet-500 mx-3 rounded";
 
-const Pergunta: React.FC<{ pergunta: PerguntaSchema }> = ({ pergunta }) => (
-  <div>
-    <div>
-      <div>{pergunta?.titulo}</div>
+  return (
+    <div onClick={selecionar} onKeyDown={selecionar} className={style}>
+      {descricao}
     </div>
+  );
+};
 
+const Pergunta: React.FC<{ pergunta: PerguntaSchema }> = ({ pergunta }) => {
+  const [selecionada, setSelecionada] = useState<string | undefined>(undefined);
+
+  return (
     <div>
-      {pergunta?.respostas?.map((resposta) => (
-        <Resposta key={resposta.id} resposta={resposta} />
-      ))}
+      <div>
+        <div className="text-lg">{pergunta?.titulo}</div>
+      </div>
+
+      <div className="flex">
+        {pergunta?.respostas?.map((resposta) => (
+          <Resposta
+            key={resposta.id}
+            descricao={resposta.descricao}
+            selecionar={() => setSelecionada(resposta.id)}
+            selecionada={selecionada === resposta.id}
+          />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Titulo: React.FC<{ titulo: string | undefined }> = ({ titulo }) => (
   <div>
@@ -74,12 +95,33 @@ const Responder: React.FC = () => {
     })();
   }, [id]);
 
+  const enviar = () => {
+    router.push("/obrigado");
+  };
+
   return (
     <div>
+      <label>
+        Indentificador:
+        <input type="text" />
+      </label>
+      <div className="btn">
+        <button type="button" onClick={enviar}>
+          Enviar
+        </button>
+      </div>
+
+      <hr />
+
       <Titulo titulo={questionario?.nome} />
+
+      <hr />
+
       <Descricao descricao={questionario?.description} />
 
-      <div>
+      <hr />
+
+      <div className="flex flex-col">
         {perguntas?.map((pergunta) => (
           <Pergunta key={pergunta.id} pergunta={pergunta} />
         ))}
