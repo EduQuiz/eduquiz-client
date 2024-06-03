@@ -1,8 +1,8 @@
-import Toast from "@/components/toast";
 import axios from "axios";
 import Link from "next/link";
 import { setCookie } from "nookies";
-import { useState } from "react";
+import { type FormEventHandler, useState } from "react";
+import Toast from "../components/toast";
 
 export default function Registrar() {
   const [username, setUsername] = useState("");
@@ -10,8 +10,9 @@ export default function Registrar() {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
 
-  async function submitLogin(event) {
+  const submitLogin: FormEventHandler = async (event) => {
     event.preventDefault();
+
     const { id, nome } = (
       await axios.post("http://localhost:4000/user/register", {
         usuario: username,
@@ -31,7 +32,7 @@ export default function Registrar() {
       setErrorText("Erro backend.");
       setError(true);
     }
-  }
+  };
 
   return (
     <div

@@ -1,7 +1,8 @@
-import axios from "axios";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import CardQuiz from "../components/card_quiz";
+import { fetchJson } from "../utils/fetchJson";
 
 interface Quiz {
   id: string;
@@ -9,11 +10,16 @@ interface Quiz {
   descricao: string;
 }
 
-interface HomeProps {
-  data: Quiz[];
-}
+export default function Home() {
+  const [data, setData] = useState<Quiz[]>([]);
 
-export default function Home({ data }: HomeProps) {
+  useEffect(() => {
+    (async () => {
+      const quizzes = await fetchJson("quizzes");
+      setData(quizzes);
+    })();
+  }, []);
+
   if (data.length === 0) {
     return (
       <div className="w-full px-12">
@@ -31,14 +37,14 @@ export default function Home({ data }: HomeProps) {
 
   return (
     <div className="w-full px-12">
-      <Link href="/create_quiz" legacyBehavior className={"flex justify-end"}>
+      <Link href="/create_quiz" className="flex justify-end">
         <AiOutlinePlusCircle
           style={{ color: "#03A4FF" }}
           className="w-10 h-10 justify-end right-6 top-6 text-blue-500 cursor-pointer"
         />
       </Link>
       <div className="w-full my-10 grid gap-y-12 gap-x-12 2xl:grid-cols-3 xl:grid-cols-2 justify-center">
-        {data?.map((question, index) => (
+        {data.map((question) => (
           <CardQuiz
             key={question.id}
             id={question.id}
@@ -49,17 +55,4 @@ export default function Home({ data }: HomeProps) {
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  let data: [];
-  try {
-    data = (await axios.get("http://localhost:4000/quizzes")).data;
-  } catch (error) {
-    console.error("Erro ao encontrar quizzes");
-  }
-
-  return {
-    props: { data },
-  };
 }

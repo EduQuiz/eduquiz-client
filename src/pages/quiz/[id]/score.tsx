@@ -1,5 +1,6 @@
-import axios from "axios";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { fetchJson } from "../../../utils/fetchJson";
 
 interface Score {
   id: number;
@@ -8,12 +9,19 @@ interface Score {
   created_at: Date;
 }
 
-interface ScoreProps {
-  data: Score[];
-}
-
-export default function Score(props: ScoreProps) {
+export default function Score() {
   const router = useRouter();
+  const { id } = router.query;
+
+  const [data, setData] = useState<Score[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetchJson(`pontuacao/${id}`);
+      setData(response);
+    })();
+  }, [id]);
+
   return (
     <div>
       <h1>Score by id: </h1>
@@ -30,7 +38,7 @@ export default function Score(props: ScoreProps) {
             </tr>
           </thead>
           <tbody>
-            {props.data.map((score, index) => (
+            {data.map((score, index) => (
               <tr
                 key={score.id}
                 className={index % 2 === 0 ? "bg-base-200" : "bg-base-100"}
@@ -48,6 +56,7 @@ export default function Score(props: ScoreProps) {
   );
 }
 
+/*
 export async function getServerSideProps(context) {
   let data = null;
 
@@ -65,3 +74,4 @@ export async function getServerSideProps(context) {
     },
   };
 }
+*/

@@ -1,7 +1,7 @@
-import Toast from "@/components/toast";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Toast from "../components/toast";
 
 interface Questionario {
   quesTittle: string;

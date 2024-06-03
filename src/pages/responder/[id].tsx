@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
+import type React from "react";
 import { useEffect, useState } from "react";
+import { fetchJson } from "../../utils/fetchJson";
 
 interface RespostaSchema {
   id: string;
-  resposta: string;
+  descricao: string;
 }
 
 interface PerguntaSchema {
@@ -12,58 +14,70 @@ interface PerguntaSchema {
   respostas: RespostaSchema[];
 }
 
-const Resposta: React.FC<{ resposta: RespostaSchema }> = ({ resposta }) => {
-  return <pre>{resposta?.resposta}</pre>;
-};
+interface QuestionarioSchema {
+  id: string;
+  nome: string;
+  description: string;
+}
 
-const Pergunta: React.FC<{ pergunta: PerguntaSchema }> = ({ pergunta }) => {
-  return (
+const Resposta: React.FC<{ resposta: RespostaSchema }> = ({ resposta }) => (
+  <pre>{JSON.stringify(resposta.descricao)}</pre>
+);
+
+const Pergunta: React.FC<{ pergunta: PerguntaSchema }> = ({ pergunta }) => (
+  <div>
     <div>
-      <div>
-        <div>Pergunta:</div>
-        <div>{pergunta?.titulo}</div>
-      </div>
-      <div>
-        {pergunta?.respostas?.map((resposta) => (
-          <Resposta key={resposta.id} resposta={resposta} />
-        ))}
-      </div>
+      <div>{pergunta?.titulo}</div>
     </div>
-  );
-};
+
+    <div>
+      {pergunta?.respostas?.map((resposta) => (
+        <Resposta key={resposta.id} resposta={resposta} />
+      ))}
+    </div>
+  </div>
+);
+
+const Titulo: React.FC<{ titulo: string | undefined }> = ({ titulo }) => (
+  <div>
+    <div className="text-2xl">{titulo}</div>
+  </div>
+);
+
+const Descricao: React.FC<{ descricao: string | undefined }> = ({
+  descricao,
+}) => (
+  <div>
+    <div className="text-xl">{descricao}</div>
+  </div>
+);
 
 const Responder: React.FC = () => {
   const router = useRouter();
 
-  const [id, setId] = useState(undefined);
-  const [perguntas, setPerguntas] = useState([]);
-  const [questionario, setQuestionario] = useState(undefined);
+  const [id, setId] = useState<string | string[] | undefined>(undefined);
+  const [perguntas, setPerguntas] = useState<PerguntaSchema[] | undefined>([]);
+  const [questionario, setQuestionario] = useState<
+    QuestionarioSchema | undefined
+  >(undefined);
 
   useEffect(() => {
-    setId(router.query.id);
+    const { id } = router.query;
+    setId(id);
   }, [router]);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:4000/quizzes/${id}`);
-      const json = await res.json();
-
-      setQuestionario(json.quiz);
-      setPerguntas(json.perguntas);
+      const { quiz, perguntas } = await fetchJson(`quizzes/${id}`);
+      setQuestionario(quiz);
+      setPerguntas(perguntas);
     })();
   }, [id]);
 
   return (
     <div>
-      <div>
-        <div>Título:</div>
-        <div>{questionario?.nome}</div>
-      </div>
-
-      <div>
-        <div>Descrição:</div>
-        <div>{questionario?.description}</div>
-      </div>
+      <Titulo titulo={questionario?.nome} />
+      <Descricao descricao={questionario?.description} />
 
       <div>
         {perguntas?.map((pergunta) => (
