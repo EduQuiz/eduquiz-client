@@ -11,6 +11,12 @@ const CardQuiz: React.FC<{ id: string; title: string; description: string }> =
         <p>{description}</p>
 
         <div className="card-actions justify-end">
+          <Link href={`/qrcode/${id}`}>
+            <button className="btn" type="button">
+              Comparlihar
+            </button>
+          </Link>
+
           <Link href={`/questionario/${id}`}>
             <button className="btn" type="button">
               Editar
