@@ -1,9 +1,8 @@
-import Toast from "@/components/toast";
-import { useState } from "react";
-
 import axios from "axios";
 import Link from "next/link";
 import { setCookie } from "nookies";
+import { type FormEventHandler, useState } from "react";
+import Toast from "../components/toast";
 
 export default function Entrar() {
   const [username, setUsername] = useState("");
@@ -11,7 +10,7 @@ export default function Entrar() {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
 
-  async function submitLogin(event) {
+  const submitLogin: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const { id, nome } = (
       await axios.post("http://localhost:4000/user/login", {
@@ -35,7 +34,7 @@ export default function Entrar() {
       setErrorText("Usuario ou senha incorreto.");
       setError(true);
     }
-  }
+  };
 
   return (
     <div

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -15,16 +14,13 @@ interface Resposta {
   id: string;
 }
 
-interface SelectAnswerProps {
-  resp: Pergunta[];
-  id: string;
-}
-
-export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
+export default function SelectAnswer() {
   // const [progress, setProgress] = useState(100);
-  const [perguntas, setPerguntas] = useState<Pergunta[]>(resp);
+  const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
   const [cont, setCont] = useState(0);
+
   const router = useRouter();
+  const { id } = router.query;
 
   useEffect(() => {
     localStorage.clear();
@@ -32,8 +28,8 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
     localStorage.setItem("quizId", JSON.stringify(id));
   }, [id]);
 
-  function responder(event) {
-    const valorResposta = event.target.dataset.value === "true";
+  const responder = (event: React.SyntheticEvent<HTMLDivElement>) => {
+    const valorResposta = event.currentTarget.dataset.value === "true";
 
     // Recupera as respostas armazenadas no localStorage ou um array vazio se ainda não houver respostas
     const respostasArmazenadas = JSON.parse(
@@ -50,7 +46,7 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
     } else {
       setCont(cont + 1);
     }
-  }
+  };
 
   // useEffect(() => {
   // 	const intervalDuration = 150;
@@ -76,45 +72,45 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
     <div className="w-full h-full relative overflow-hidden">
       <div className="flex w-full h-[10%] border-b border-gray-500">
         <span className="px-4 text-[32px] text-white font-normal font-['Lexend Deca']">
-          {perguntas[cont].titulo}
+          {perguntas[cont]?.titulo}
         </span>
       </div>
       <div className="w-[50%] ml-[6%] mt-[3%] text-white text-sm font-normal font-['Lexend Deca']">
-        {perguntas[cont].description}
+        {perguntas[cont]?.description}
       </div>
       <div className="grid grid-cols-2 gap-x-3 gap-y-3 justify-center h-1/2 w-2/3 mt-16">
         <div
           className="flex w-full  rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900  hover:border-white hover:cursor-pointer"
-          data-value={perguntas[cont].respostas[0].resultado}
+          data-value={perguntas[cont]?.respostas[0]?.resultado}
           onClick={responder}
           onKeyDown={responder}
         >
-          {perguntas[cont].respostas[0].description}
+          {perguntas[cont]?.respostas[0]?.description}
         </div>
         <div
           className="flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer"
-          data-value={perguntas[cont].respostas[1].resultado}
+          data-value={perguntas[cont]?.respostas[1]?.resultado}
           onClick={responder}
           onKeyDown={responder}
         >
-          {perguntas[cont].respostas[1].description}
+          {perguntas[cont]?.respostas[1]?.description}
         </div>
 
         <div
           className="flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer"
-          data-value={perguntas[cont].respostas[2].resultado}
+          data-value={perguntas[cont]?.respostas[2]?.resultado}
           onClick={responder}
           onKeyDown={responder}
         >
-          {perguntas[cont].respostas[2].description}
+          {perguntas[cont]?.respostas[2]?.description}
         </div>
         <div
           className="flex w-full rounded-lg border border-violet-700 items-center justify-center hover:bg-violet-900 hover:border-white hover:cursor-pointer"
-          data-value={perguntas[cont].respostas[3].resultado}
+          data-value={perguntas[cont]?.respostas[3]?.resultado}
           onClick={responder}
           onKeyDown={responder}
         >
-          {perguntas[cont].respostas[3].description}
+          {perguntas[cont]?.respostas[3]?.description}
         </div>
       </div>
       {/* <progress className="progress w-full absolute bottom-0 h-4" style={progressBarStyle}></progress> */}
@@ -122,6 +118,7 @@ export default function SelectAnswer({ resp, id }: SelectAnswerProps) {
   );
 }
 
+/*
 export async function getServerSideProps(context) {
   const resp = (
     await axios.get(`http://localhost:4000/pergunta/all/${context.query.id}`)
@@ -130,3 +127,4 @@ export async function getServerSideProps(context) {
     props: { resp, id: context.query.id },
   };
 }
+*/

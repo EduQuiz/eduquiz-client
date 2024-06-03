@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import type { ReactNode } from "react";
 import { HiChartPie } from "react-icons/hi";
 import { HiBars3 } from "react-icons/hi2";
 import { MdCloud, MdLogout, MdQuiz } from "react-icons/md";
@@ -7,7 +7,7 @@ import { MdCloud, MdLogout, MdQuiz } from "react-icons/md";
 const iconStyle =
   "w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white";
 
-const El = ({ href, children }) => {
+const El = ({ href, children }: { href: string; children: ReactNode }) => {
   return (
     <Link
       href={href}
@@ -18,7 +18,7 @@ const El = ({ href, children }) => {
   );
 };
 
-export default function Sidebar({ children }) {
+export default function Sidebar({ children }: { children: ReactNode }) {
   return (
     <div className="drawer sm:drawer-open ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

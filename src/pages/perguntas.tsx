@@ -1,9 +1,6 @@
 import axios from "axios";
-
 import Link from "next/link";
-
 import { useEffect, useState } from "react";
-
 import ModalCreateQuiz from "../components/modal_create_question";
 
 interface Pergunta {
