@@ -9,7 +9,12 @@ export default function App({ Component, pageProps }: AppProps) {
     const { user_id } = parseCookies();
   }, []);
 
-  if (Component.name === "Entrar" || Component.name === "Registrar") {
+  if (
+    Component.name === "Entrar" ||
+    Component.name === "Registrar" ||
+    Component.name === "Responder" ||
+    Component.name === "Obrigado"
+  ) {
     return <Component {...pageProps} />;
   }
 
