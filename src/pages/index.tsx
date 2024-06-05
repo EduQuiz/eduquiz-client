@@ -6,8 +6,7 @@ import { fetchJson } from "../utils/fetchJson";
 
 interface Quiz {
   id: string;
-  nome: string;
-  descricao: string;
+  titulo: string;
 }
 
 export default function Home() {
@@ -15,8 +14,8 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      const quizzes = await fetchJson("quizzes");
-      setData(quizzes);
+      const questionarios = await fetchJson("questionario");
+      setData(questionarios);
     })();
   }, []);
 
@@ -48,8 +47,7 @@ export default function Home() {
           <CardQuiz
             key={question.id}
             id={question.id}
-            title={question.nome}
-            description={question.descricao}
+            titulo={question.titulo}
           />
         ))}
       </div>

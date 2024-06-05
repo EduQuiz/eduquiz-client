@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
 interface Props {
-  pergId: string;
-  pergTitle: string;
-  pergDescription: string;
-  respostas: Resposta[];
+  id: string;
+  pergunta: string;
+  alternativas: Alternativa[];
   titleForms: string;
   modal: boolean;
   tipo: "create" | "update";
@@ -15,71 +14,69 @@ interface Props {
 
 interface Pergunta {
   id: string;
-  titulo: string;
-  description: string;
-  respostas: Resposta[];
+  pergunta: string;
+  alternativas: Alternativa[];
 }
 
-interface Resposta {
+interface Alternativa {
   id: string;
-  description: string;
-  resultado: boolean;
+  alternativa: string;
+  correta: boolean;
 }
 
 export default function ModalCreateQuiz(props: Props) {
   const [pergunta, setPergunta] = useState<Pergunta>({
     id: "",
-    titulo: "",
-    description: "",
-    respostas: [],
+    pergunta: "",
+    alternativas: [],
   });
-  const [respostas, setRespostas] = useState<Resposta[]>([
-    { id: "", description: "", resultado: false },
-    { id: "", description: "", resultado: false },
-    { id: "", description: "", resultado: false },
-    { id: "", description: "", resultado: false },
+
+  const [alternativas, setAlternativas] = useState<Alternativa[]>([
+    { id: "", alternativa: "", correta: false },
+    { id: "", alternativa: "", correta: false },
+    { id: "", alternativa: "", correta: false },
+    { id: "", alternativa: "", correta: false },
   ]);
 
   useEffect(() => {
-    if (props.pergId) {
+    if (props.id) {
       const perguntaEdit: Pergunta = {
-        id: props.pergId,
-        titulo: props.pergTitle,
-        description: props.pergDescription,
-        respostas: props.respostas,
+        id: props.id,
+        pergunta: props.pergunta,
+        alternativas: props.alternativas,
       };
 
-      setRespostas(perguntaEdit.respostas);
+      setAlternativas(perguntaEdit.alternativas);
       setPergunta(perguntaEdit);
     }
-  }, [props.pergId, props.pergTitle, props.pergDescription, props.respostas]);
+  }, [props.id, props.pergunta, props.alternativas]);
 
   function handleRespostaChange(index: number, description: string) {
-    const updatedRespostas = [...respostas];
-    updatedRespostas[index].description = description;
-    setRespostas(updatedRespostas);
+    const updatedRespostas = [...alternativas];
+    updatedRespostas[index].alternativa = description;
+    setAlternativas(updatedRespostas);
   }
 
   function handleRespostaCheckboxChange(index: number) {
-    const updatedRespostas = [...respostas];
-    updatedRespostas[index].resultado = !updatedRespostas[index].resultado;
-    setRespostas(updatedRespostas);
+    const updatedRespostas = [...alternativas];
+    updatedRespostas[index].correta = !updatedRespostas[index].correta;
+    setAlternativas(updatedRespostas);
   }
 
-  function validateAnswers(respostas: Resposta[]): boolean {
+  function validateAnswers(respostas: Alternativa[]): boolean {
     const trueAnswersCount = respostas.filter(
-      (resposta) => resposta.resultado,
+      (resposta) => resposta.alternativa,
     ).length;
     return trueAnswersCount === 1;
   }
 
   async function onSubmit() {
-    const isValid = validateAnswers(respostas);
+    const isValid = validateAnswers(alternativas);
 
     if (isValid) {
       const perguntaSubmit: Pergunta = {
         ...pergunta,
-        respostas: respostas.filter((resposta) => resposta.description),
+        alternativas: alternativas.filter((alternativa) => alternativa.alternativa),
       };
 
       if (props.tipo === "create") {
@@ -127,28 +124,16 @@ export default function ModalCreateQuiz(props: Props) {
           <input
             id="pergunta"
             type="text"
-            value={pergunta.titulo}
+            value={pergunta.pergunta}
             className="input text-xs input-bordered w-full max-w-xl"
             onChange={(e) =>
-              setPergunta({ ...pergunta, titulo: e.target.value })
+              setPergunta({ ...pergunta, pergunta: e.target.value })
             }
           />
         </div>
       </div>
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Descrição</span>
-        </label>
-        <textarea
-          value={pergunta.description}
-          className="textarea text-xs textarea-bordered h-24"
-          onChange={(e) =>
-            setPergunta({ ...pergunta, description: e.target.value })
-          }
-        />
-      </div>
       <div className="w-full flex justify-between align-center gap-2 flex-col">
-        {respostas.map((resposta, index) => (
+        {alternativas.map((resposta, index) => (
           <div
             key={resposta.id}
             className="w-full flex justify-between align-center gap-12"
@@ -158,7 +143,7 @@ export default function ModalCreateQuiz(props: Props) {
                 <span className="label-text">{`Resposta ${index + 1}`}</span>
               </label>
               <textarea
-                value={resposta.description}
+                value={resposta.alternativa}
                 className="textarea text-xs textarea-bordered h-24"
                 onChange={(e) => handleRespostaChange(index, e.target.value)}
               />
@@ -168,7 +153,7 @@ export default function ModalCreateQuiz(props: Props) {
                 <span className="label-text">Resposta correta</span>
                 <input
                   type="checkbox"
-                  checked={resposta.resultado}
+                  checked={resposta.correta}
                   className="checkbox text-xs checkbox-primary"
                   onChange={() => handleRespostaCheckboxChange(index)}
                 />

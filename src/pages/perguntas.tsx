@@ -1,49 +1,41 @@
-import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ModalCreateQuiz from "../components/modal_create_question";
+import { fetchJson } from "../utils/fetchJson";
 
 interface Pergunta {
   id: string;
-  titulo: string;
-  description: string;
-  respostas: Resposta[];
+  pergunta: string;
+  alternativas: Alternativas[];
 }
 
-interface Resposta {
+interface Alternativas {
   id: string;
-  description: string;
-  resultado: boolean;
+  alternativa: string;
+  correta: boolean;
 }
 
 export default function Perguntas() {
-  const [providerTablePerguntas, setProviderTablePerguntas] = useState<
+  const [perguntas, setPerguntas] = useState<
     Pergunta[]
   >([]);
+
   const [pergunta, setPergunta] = useState<Pergunta>({
     id: "",
-    titulo: "",
-    description: "",
-    respostas: [],
+    pergunta: "",
+    alternativas: [],
   });
 
   useEffect(() => {
-    getPerguntas();
-  }, []);
-
-  function getPerguntas() {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const resp = await axios.get("http://localhost:4000/pergunta/all");
-        setProviderTablePerguntas(resp.data);
+        const res = await fetchJson("pergunta");
+        setPerguntas(res);
       } catch (error) {
-        console.error("Erro ao encontrar perguntas");
+        console.error(error);
       }
-    };
-
-    fetchData();
-    console.log("aquii");
-  }
+    })();
+  }, []);
 
   const onEdit = (perguntaEdit: Pergunta) => {
     if (perguntaEdit.id) {
@@ -54,10 +46,9 @@ export default function Perguntas() {
   function onDelete(id: string) {
     return async () => {
       try {
-        const resp = await axios.delete(`http://localhost:4000/pergunta/${id}`);
+        const resp = await fetch(`http://localhost:4000/pergunta/${id}`, { method: "DELETE"});
         console.log(resp);
         if (resp.status === 200) {
-          await getPerguntas();
         } else {
           console.error("Falha ao deletar pergunta");
         }
@@ -87,26 +78,24 @@ export default function Perguntas() {
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Descrição</th>
             </tr>
           </thead>
           <tbody>
-            {providerTablePerguntas.map((question) => (
-              <tr key={question.id}>
-                <td>{question.titulo}</td>
-                <td>{question.description}</td>
+            {perguntas.map((p) => (
+              <tr key={p.id}>
+                <td>{p.pergunta}</td>
                 <th className="flex justify-end gap-2">
                   <label
                     htmlFor="my-drawer-4"
                     className="btn btn-ghost btn-xs"
-                    onClick={() => onEdit(question)}
-                    onKeyDown={() => onEdit(question)}
+                    onClick={() => onEdit(p)}
+                    onKeyDown={() => onEdit(p)}
                   >
                     details
                   </label>
                   <button
                     className="btn btn-error btn-xs"
-                    onClick={onDelete(question.id)}
+                    onClick={onDelete(p.id)}
                     type="button"
                   >
                     delete
@@ -128,10 +117,9 @@ export default function Perguntas() {
           <ul className="menu w-fit min-h-full bg-gray-800 text-base-content">
             <ModalCreateQuiz
               tipo="update"
-              pergId={pergunta.id}
-              pergDescription={pergunta.description}
-              pergTitle={pergunta.titulo}
-              respostas={pergunta.respostas}
+              id={pergunta.id}
+              pergunta={pergunta.pergunta}
+              alternativas={pergunta.alternativas}
               titleForms="Editar pergunta"
               modal={true}
               onClose={handleModalSubmit}

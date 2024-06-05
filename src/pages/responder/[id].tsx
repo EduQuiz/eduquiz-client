@@ -3,21 +3,15 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { fetchJson } from "../../utils/fetchJson";
 
-interface RespostaSchema {
+interface AlternativaSchema {
   id: string;
-  descricao: string;
+  alternativa: string;
 }
 
 interface PerguntaSchema {
   id: string;
-  titulo: string;
-  respostas: RespostaSchema[];
-}
-
-interface QuestionarioSchema {
-  id: string;
-  nome: string;
-  description: string;
+  pergunta: string;
+  alternativas: AlternativaSchema[];
 }
 
 const Resposta: React.FC<{
@@ -42,15 +36,15 @@ const Pergunta: React.FC<{
   setResposta: (resposta: string) => void;
 }> = ({ pergunta, selecionada, setResposta }) => (
   <div>
-    <div className="text-lg">{pergunta?.titulo}</div>
+    <div className="text-lg">{pergunta?.pergunta}</div>
 
     <div className="flex">
-      {pergunta?.respostas?.map((resposta) => (
+      {pergunta?.alternativas?.map((alternativa) => (
         <Resposta
-          key={resposta.id}
-          descricao={resposta.descricao}
-          setResposta={() => setResposta(resposta.id)}
-          selecionada={selecionada === resposta.id}
+          key={alternativa.id}
+          descricao={alternativa.alternativa}
+          setResposta={() => setResposta(alternativa.id)}
+          selecionada={selecionada === alternativa.id}
         />
       ))}
     </div>
@@ -76,10 +70,8 @@ const Responder: React.FC = () => {
 
   const { id } = router.query;
 
-  const [perguntas, setPerguntas] = useState<PerguntaSchema[] | undefined>([]);
-  const [questionario, setQuestionario] = useState<
-    QuestionarioSchema | undefined
-  >(undefined);
+  const [perguntas, setPerguntas] = useState<PerguntaSchema[]>([]);
+  const [titulo, setTitulo] = useState<string>("");
 
   const [respostas, setRespostas] = useState<Map<string, string>>(new Map());
   const adicionarResposta = (pergunta: string, resposta: string) => {
@@ -90,9 +82,12 @@ const Responder: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const { quiz, perguntas } = await fetchJson(`quizzes/${id}`);
-      setQuestionario(quiz);
-      setPerguntas(perguntas);
+      const res = await fetchJson(`questionario/${id}`);
+      if (res) {
+        const { titulo, perguntas } = res;
+        setTitulo(titulo);
+        setPerguntas(perguntas);
+      }
     })();
   }, [id]);
 
@@ -113,6 +108,7 @@ const Responder: React.FC = () => {
           type="text"
         />
       </label>
+
       <div className="btn">
         <button type="button" onClick={enviar}>
           Enviar
@@ -121,16 +117,12 @@ const Responder: React.FC = () => {
 
       <hr />
 
-      <Titulo titulo={questionario?.nome} />
-
-      <hr />
-
-      <Descricao descricao={questionario?.description} />
+      <Titulo titulo={titulo} />
 
       <hr />
 
       <div className="flex flex-col">
-        {perguntas?.map((pergunta) => (
+        {perguntas.map((pergunta) => (
           <Pergunta
             key={pergunta.id}
             pergunta={pergunta}
