@@ -1,12 +1,12 @@
+import { cookies } from "next/headers";
 import { useRouter } from "next/router";
-import { destroyCookie } from "nookies";
 import { useEffect } from "react";
 
 export const Sair = () => {
   const router = useRouter();
 
   useEffect(() => {
-    destroyCookie(undefined, "usuario");
+    cookies().delete("jwt");
     router.push("/entrar");
   }, [router]);
 
