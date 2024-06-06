@@ -76,7 +76,9 @@ export default function ModalCreateQuiz(props: Props) {
     if (isValid) {
       const perguntaSubmit: Pergunta = {
         ...pergunta,
-        alternativas: alternativas.filter((alternativa) => alternativa.alternativa),
+        alternativas: alternativas.filter(
+          (alternativa) => alternativa.alternativa,
+        ),
       };
 
       if (props.tipo === "create") {

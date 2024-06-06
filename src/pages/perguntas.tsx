@@ -16,9 +16,7 @@ interface Alternativas {
 }
 
 export default function Perguntas() {
-  const [perguntas, setPerguntas] = useState<
-    Pergunta[]
-  >([]);
+  const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
 
   const [pergunta, setPergunta] = useState<Pergunta>({
     id: "",
@@ -46,7 +44,9 @@ export default function Perguntas() {
   function onDelete(id: string) {
     return async () => {
       try {
-        const resp = await fetch(`http://localhost:4000/pergunta/${id}`, { method: "DELETE"});
+        const resp = await fetch(`http://localhost:4000/pergunta/${id}`, {
+          method: "DELETE",
+        });
         console.log(resp);
         if (resp.status === 200) {
         } else {

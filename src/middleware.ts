@@ -1,10 +1,10 @@
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const currentUser = request.cookies.get("usuario")?.value;
+  const jwt = request.cookies.get("jwt");
 
   if (
-    !currentUser &&
+    !jwt &&
     !request.nextUrl.pathname.startsWith("/entrar") &&
     !request.nextUrl.pathname.startsWith("/registrar")
   ) {

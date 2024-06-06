@@ -2,8 +2,8 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Toast from "../components/toast";
-import { sendJson } from "../utils/sendJson";
 import { fetchJson } from "../utils/fetchJson";
+import { sendJson } from "../utils/sendJson";
 
 interface Pergunta {
   id: string;
@@ -82,9 +82,9 @@ export default function CreateQuiz() {
 
     if (newQuiz.perguntas.length > 0) {
       (async () => {
-      const res = await sendJson("questionario", newQuiz);
-      console.log(res);
-      window.location.href = "/";
+        const res = await sendJson("questionario", newQuiz);
+        console.log(res);
+        window.location.href = "/";
       })();
     } else {
       console.log("erro ao criar questionário");

@@ -1,8 +1,8 @@
-import axios from "axios";
 import Link from "next/link";
-import { setCookie } from "nookies";
+import { useRouter } from "next/router";
 import { type FormEventHandler, useState } from "react";
 import Toast from "../components/toast";
+import { sendJson } from "../utils/sendJson";
 
 export default function Entrar() {
   const [username, setUsername] = useState("");
@@ -10,26 +10,17 @@ export default function Entrar() {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
 
+  const router = useRouter();
+
   const submitLogin: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    const { id, nome } = (
-      await axios.post("http://localhost:4000/user/login", {
-        usuario: username,
-        senha: password,
-      })
-    ).data;
 
+    const { id } = await sendJson("criador/entrar", {
+      email: username,
+      senha: password,
+    });
     if (id) {
-      setCookie(undefined, "user_id", id, {
-        maxAge: 60 * 30 * 1, // half hour
-      });
-      setCookie(undefined, "user_name", nome, {
-        maxAge: 60 * 30 * 1, // half hour
-      });
-
-      setCookie(undefined, "usuario", id);
-
-      document.location = "/";
+      router.push("/");
     } else {
       setErrorText("Usuario ou senha incorreto.");
       setError(true);
