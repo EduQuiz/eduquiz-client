@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { fetchJson } from "../../utils/fetchJson";
+import { sendJson } from "../../utils/sendJson";
 
 interface AlternativaSchema {
   id: string;
@@ -92,9 +93,16 @@ const Responder: React.FC = () => {
   }, [id]);
 
   const enviar = () => {
-    console.log(identificador);
-    console.log(respostas);
-    console.log(id);
+    const listaDeRespostas = Array.from(
+      respostas,
+      ([pergunta, alternativa]) => ({
+        pergunta,
+        alternativa,
+      }),
+    );
+
+    sendJson("resposta", { id, identificador, respostas: listaDeRespostas });
+
     router.push("/obrigado");
   };
 
