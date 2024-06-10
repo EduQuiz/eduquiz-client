@@ -10,7 +10,8 @@ export const sendJson = async (path: string, data: object) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
-  return response;
+  return await response.json();
 };

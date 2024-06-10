@@ -2,22 +2,12 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Toast from "../components/toast";
-
-interface Questionario {
-  quesTittle: string;
-  quesDescription: string;
-  quesImage: string;
-  perguntas: Pergunta[];
-}
-
-interface Perguntas {
-  perguntas: Pergunta[];
-}
+import { fetchJson } from "../utils/fetchJson";
+import { sendJson } from "../utils/sendJson";
 
 interface Pergunta {
   id: string;
-  titulo: string;
-  description: string;
+  pergunta: string;
 }
 
 export default function CreateQuiz() {
@@ -34,8 +24,7 @@ export default function CreateQuiz() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = (await axios.get("http://localhost:4000/pergunta/all"))
-          .data;
+        const resp = await fetchJson("/pergunta/all");
         console.log(resp);
         setProviderPerguntas(resp);
       } catch (error) {
@@ -92,18 +81,11 @@ export default function CreateQuiz() {
     };
 
     if (newQuiz.perguntas.length > 0) {
-      // axios.post("http://localhost:4000/quizzes/create", newQuiz);
-      const res = fetch("http://localhost:4000/quizzes/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newQuiz),
-      }).then((data) => {
-        console.log(data);
+      (async () => {
+        const res = await sendJson("questionario", newQuiz);
+        console.log(res);
         window.location.href = "/";
-      });
-      // console.log(res);
+      })();
     } else {
       console.log("erro ao criar questionário");
     }
@@ -179,7 +161,7 @@ export default function CreateQuiz() {
             </option>
             {providerPerguntas?.map((question) => (
               <option value={question.id} key={question.id}>
-                {question.titulo}
+                {question.pergunta}
               </option>
             ))}
           </select>
@@ -204,8 +186,7 @@ export default function CreateQuiz() {
             <tbody>
               {providerTablePerguntas.map((question) => (
                 <tr key={question.id}>
-                  <td>{question.titulo}</td>
-                  <td>{question.description}</td>
+                  <td>{question.pergunta}</td>
                   <th className="flex justify-end gap-2">
                     <button
                       className="btn btn-error btn-xs"
