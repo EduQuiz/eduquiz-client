@@ -1,5 +1,5 @@
-import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Toast from "../components/toast";
 import { fetchJson } from "../utils/fetchJson";
@@ -16,23 +16,23 @@ export default function CreateQuiz() {
     Pergunta[]
   >([]);
   const [quizTitle, setQuizTitle] = useState("");
-  const [quizDescription, setQuizDescription] = useState("");
-  const [quizImage, setQuizImage] = useState("");
   const [perguntaSelecionada, setPerguntaSelecionada] = useState<Pergunta>();
-  const [perguntaJaExiste, setPerguntaJaExiste] = useState(false);
+
+  const [perguntas, setPerguntas] = useState([]);
+  const [perguntaSelecionadas, setPerguntaSelecionadas] = useState(new Set());
+
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const resp = await fetchJson("/pergunta/all");
-        console.log(resp);
-        setProviderPerguntas(resp);
+        const res = await fetchJson("pergunta");
+        setProviderPerguntas(res);
+        setPerguntas(res);
       } catch (error) {
-        console.error("Error:", error);
+        console.error(error);
       }
-    };
-
-    fetchData();
+    })();
   }, []);
 
   function setPergunta(value: string) {
@@ -45,6 +45,10 @@ export default function CreateQuiz() {
   }
 
   function onAdd() {
+    setPerguntaSelecionadas(
+      (anterior) => new Set(anterior.add(perguntaSelecionada?.id)),
+    );
+
     if (perguntaSelecionada) {
       const perguntaJaAdicionada = providerTablePerguntas.find(
         (pergunta) => pergunta.id === perguntaSelecionada.id,
@@ -55,39 +59,33 @@ export default function CreateQuiz() {
           ...(perguntaSelecionada ? [perguntaSelecionada] : []),
         ]);
       } else {
-        setPerguntaJaExiste(true);
       }
     }
   }
 
   function handleProviderPerguntas() {
-    const perguntasId: string[] = [];
+    if (providerPerguntas) {
+      return providerPerguntas.map((pergunta) => pergunta.id);
+    }
 
-    providerPerguntas?.map((pergunta) => {
-      perguntasId.push(pergunta.id);
-    });
-
-    return perguntasId;
+    return [];
   }
 
   function onSubmit() {
-    const providerPerguntasId: string[] = handleProviderPerguntas();
+    const providerPerguntasId = handleProviderPerguntas();
 
     const newQuiz = {
       titulo: quizTitle,
-      descricao: quizDescription,
-      urlImageQuiz: quizImage,
-      perguntas: providerPerguntasId,
+      perguntas: Array.from(perguntaSelecionadas),
     };
 
     if (newQuiz.perguntas.length > 0) {
       (async () => {
         const res = await sendJson("questionario", newQuiz);
-        console.log(res);
-        window.location.href = "/";
+        router.push("/");
       })();
     } else {
-      console.log("erro ao criar questionário");
+      console.error("erro ao criar questionário");
     }
   }
 
@@ -102,19 +100,13 @@ export default function CreateQuiz() {
 
   return (
     <div className="w-full px-14 flex flex-col gap-6 mt-6 h-full">
-      {perguntaJaExiste && (
-        <Toast
-          title={"Pergunta já adicionada"}
-          type={"alert-warning"}
-          onClose={() => setPerguntaJaExiste(false)}
-        />
-      )}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Criar novo questionário</h1>
         <button className="btn btn-primary" onClick={onSubmit} type="button">
           Salvar
         </button>
       </div>
+
       <div className="w-full flex justify-between align-center gap-12">
         <div className="form-control w-full max-w-xl ">
           <label className="label">
@@ -127,25 +119,8 @@ export default function CreateQuiz() {
             className="input input-bordered w-full max-w-xl"
           />
         </div>
-        <div className="form-control w-full max-w-md self-end">
-          <input
-            value={quizImage}
-            onChange={(e) => setQuizImage(e.target.value)}
-            type="file"
-            className="file-input file-input-bordered w-full max-w-md"
-          />
-        </div>
       </div>
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Descrição</span>
-        </label>
-        <textarea
-          value={quizDescription}
-          onChange={(e) => setQuizDescription(e.target.value)}
-          className="textarea textarea-bordered h-24"
-        />
-      </div>
+
       <div className="flex flex-row gap-6">
         <div className="form-control w-full">
           <label className="label">
@@ -174,13 +149,13 @@ export default function CreateQuiz() {
           Adicionar
         </button>
       </div>
+
       <div className="overflow-auto w-full rounded-md items-center">
         {providerPerguntas && providerTablePerguntas.length > 0 && (
           <table className="table">
             <thead>
               <tr>
                 <th>Nome</th>
-                <th>Descrição</th>
               </tr>
             </thead>
             <tbody>
@@ -193,7 +168,7 @@ export default function CreateQuiz() {
                       onClick={onDeletePergunta(question)}
                       type="button"
                     >
-                      delete
+                      Remover
                     </button>
                   </th>
                 </tr>
