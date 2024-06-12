@@ -1,8 +1,8 @@
-import axios from "axios";
 import Link from "next/link";
 import { setCookie } from "nookies";
 import { type FormEventHandler, useState } from "react";
 import Toast from "../components/toast";
+import { sendJson } from "../utils/sendJson";
 
 export default function Registrar() {
   const [username, setUsername] = useState("");
@@ -13,12 +13,10 @@ export default function Registrar() {
   const submitLogin: FormEventHandler = async (event) => {
     event.preventDefault();
 
-    const { id, nome } = (
-      await axios.post("http://localhost:4000/user/register", {
-        usuario: username,
-        senha: password,
-      })
-    ).data;
+    const { id } = await sendJson("criador", {
+      email: username,
+      senha: password,
+    });
 
     if (id) {
       setCookie(undefined, "user_id", id, {
