@@ -83,29 +83,30 @@ export default function ModalCreateQuiz() {
             className="w-full flex justify-between align-center gap-12"
           >
             <div className="form-control w-full max-w-full">
-              <label className="label">
-                <span className="label-text">{`Alternativa ${index + 1}`}</span>
-              </label>
+              <div className="w-full flex">
+                <label className="label">
+                  <span className="label-text">{`Alternativa ${index + 1}`}</span>
+                </label>
+                <div className="form-control self-center">
+                  <label className="label">
+                    <span className="m-3 label-text">Correta</span>
+                    <input
+                      className="radio"
+                      type="radio"
+                      id={resposta.ordem.toString()}
+                      value={resposta.ordem.toString()}
+                      checked={radio === resposta.ordem}
+                      onChange={handleRadio}
+                      name="correta"
+                    />
+                  </label>
+                </div>
+              </div>
               <textarea
                 value={resposta.alternativa}
                 className="textarea text-xs textarea-bordered h-24"
                 onChange={(e) => handleRespostaChange(index, e.target.value)}
               />
-            </div>
-
-            <div className="form-control self-center">
-              <label className="label">
-                <span className="m-3 label-text">Correta</span>
-                <input
-                  className="radio"
-                  type="radio"
-                  id={resposta.ordem.toString()}
-                  value={resposta.ordem.toString()}
-                  checked={radio === resposta.ordem}
-                  onChange={handleRadio}
-                  name="correta"
-                />
-              </label>
             </div>
           </div>
         ))}
