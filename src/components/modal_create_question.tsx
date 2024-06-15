@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { sendJson } from "../utils/sendJson";
 
 interface Pergunta {
@@ -35,12 +35,6 @@ export default function ModalCreateQuiz() {
     setAlternativas(updatedRespostas);
   }
 
-  function handleRespostaCheckboxChange(index: number) {
-    const updatedRespostas = [...alternativas];
-    //updatedRespostas[index].correta = !updatedRespostas[index].correta;
-    setAlternativas(updatedRespostas);
-  }
-
   async function onSubmit() {
     const perguntaSubmit = {
       ...pergunta,
@@ -56,7 +50,7 @@ export default function ModalCreateQuiz() {
   }
 
   const handleRadio = (e: ChangeEvent<HTMLInputElement>) => {
-    setRadio(parseInt(e.target.value));
+    setRadio(Number.parseInt(e.target.value));
   };
 
   return (
@@ -69,7 +63,6 @@ export default function ModalCreateQuiz() {
         <div className="form-control w-full max-w-xl ">
           <label className="label" htmlFor="pergunta">
             <span className="label-text">Título da pergunta</span>
-            <span>{radio}</span>
           </label>
           <input
             id="pergunta"
@@ -99,29 +92,21 @@ export default function ModalCreateQuiz() {
                 onChange={(e) => handleRespostaChange(index, e.target.value)}
               />
             </div>
-            <div className="form-control self-end">
-              <label className="label cursor-pointer">
-                <span className="label-text">Correta</span>
+
+            <div className="form-control self-center">
+              <label className="label">
+                <span className="m-3 label-text">Correta</span>
                 <input
-                  type="checkbox"
-                  checked={resposta.ordem === radio}
-                  className="checkbox text-xs checkbox-primary"
-                  onChange={() => handleRespostaCheckboxChange(index)}
+                  className="radio"
+                  type="radio"
+                  id={resposta.ordem.toString()}
+                  value={resposta.ordem.toString()}
+                  checked={radio === resposta.ordem}
+                  onChange={handleRadio}
+                  name="correta"
                 />
               </label>
             </div>
-
-            <label>
-              Radio
-              <input
-                type="radio"
-                id={resposta.ordem.toString()}
-                value={resposta.ordem.toString()}
-                checked={radio === resposta.ordem}
-                onChange={handleRadio}
-                name="correta"
-              />
-            </label>
           </div>
         ))}
         <button
