@@ -16,7 +16,7 @@
     "clipboard": "^2.0.11",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.9.0",
-    "next": "14.2.3",
+    "next": "14.2.4",
     "nookies": "^2.5.2",
     "react": "^18",
     "react-dom": "^18",
@@ -30,7 +30,7 @@
     "autoprefixer": "^10",
     "daisyui": "^4.12.2",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3",
+    "eslint-config-next": "14.2.4",
     "postcss": "^8",
     "tailwindcss": "^3",
     "typescript": "^5"
