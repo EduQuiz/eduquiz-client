@@ -9,7 +9,7 @@ const QRCode: React.FC = () => {
   const size = "300x300";
 
   return (
-    <div className="flex justify-center items-center m-10 p-10 bg-white">
+    <div className="flex flex-col justify-center items-center m-10 p-10 bg-white">
       <img
         src={`https://api.qrserver.com/v1/create-qr-code?size=${size}&data=http://localhost:3000/responder/${id}`}
         alt={`http://localhost:3000/responder/${id}`}
