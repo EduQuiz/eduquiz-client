@@ -59,7 +59,7 @@ export default function Perguntas() {
         <table className="table">
           <thead>
             <tr>
-              <th>Nome</th>
+              <th>Título</th>
             </tr>
           </thead>
           <tbody>
