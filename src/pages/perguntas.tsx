@@ -31,16 +31,12 @@ export default function Perguntas() {
   function onDelete(id: string) {
     return async () => {
       try {
-        const resp = await fetch(`http://localhost:4000/pergunta/${id}`, {
+        await fetch(`http://localhost:4000/pergunta/${id}`, {
           method: "DELETE",
+          credentials: "include",
         });
-        console.log(resp);
-        if (resp.status === 200) {
-        } else {
-          console.error("Falha ao deletar pergunta");
-        }
       } catch (error) {
-        console.error("Erro ao deletar pergunta");
+        console.error(error);
       }
     };
   }
