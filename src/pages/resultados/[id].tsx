@@ -42,7 +42,7 @@ const Resultados: React.FC = () => {
 
   return (
     <div className="m-6">
-      <div>Respostas para o questionário "{titulo}"</div>
+      <div>Respostas para o questionário &quot;{titulo}&quot;</div>
       <table>
         <thead>
           <tr>
