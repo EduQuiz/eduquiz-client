@@ -83,7 +83,7 @@ export default function ModalCreateQuiz() {
             className="w-full flex justify-between align-center gap-12"
           >
             <div className="form-control w-full max-w-full">
-              <div className="w-full flex">
+              <div className="flex">
                 <label className="label">
                   <span className="label-text">{`Alternativa ${index + 1}`}</span>
                 </label>
