@@ -36,7 +36,7 @@ const Pergunta: React.FC<{
   selecionada: string | undefined;
   setResposta: (resposta: string) => void;
 }> = ({ pergunta, selecionada, setResposta }) => (
-  <div>
+  <div className="m-3">
     <div className="text-lg">{pergunta?.pergunta}</div>
 
     <div className="flex">
@@ -53,16 +53,8 @@ const Pergunta: React.FC<{
 );
 
 const Titulo: React.FC<{ titulo: string | undefined }> = ({ titulo }) => (
-  <div>
+  <div className="m-3">
     <div className="text-2xl">{titulo}</div>
-  </div>
-);
-
-const Descricao: React.FC<{ descricao: string | undefined }> = ({
-  descricao,
-}) => (
-  <div>
-    <div className="text-xl">{descricao}</div>
   </div>
 );
 
@@ -107,21 +99,15 @@ const Responder: React.FC = () => {
   };
 
   return (
-    <div>
-      <label>
-        Indentificador:
+    <div className="m-6">
+      <label className="m-3">
+        Seu nome:
         <input
           value={identificador}
           onChange={(e) => setItendificador(e.target.value)}
           type="text"
         />
       </label>
-
-      <div className="btn">
-        <button type="button" onClick={enviar}>
-          Enviar
-        </button>
-      </div>
 
       <hr />
 
@@ -130,7 +116,7 @@ const Responder: React.FC = () => {
       <hr />
 
       <div className="flex flex-col">
-        {perguntas.map((pergunta) => (
+        {perguntas?.map((pergunta) => (
           <Pergunta
             key={pergunta.id}
             pergunta={pergunta}
@@ -140,6 +126,16 @@ const Responder: React.FC = () => {
             }
           />
         ))}
+      </div>
+
+      <hr />
+
+      <div className="m-3">
+        <div className="btn">
+          <button type="button" onClick={enviar}>
+            Enviar
+          </button>
+        </div>
       </div>
     </div>
   );

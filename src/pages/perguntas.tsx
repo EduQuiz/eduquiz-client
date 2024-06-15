@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ModalCreateQuiz from "../components/modal_create_question";
 import { fetchJson } from "../utils/fetchJson";
 
 interface Pergunta {
@@ -18,12 +17,6 @@ interface Alternativas {
 export default function Perguntas() {
   const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
 
-  const [pergunta, setPergunta] = useState<Pergunta>({
-    id: "",
-    pergunta: "",
-    alternativas: [],
-  });
-
   useEffect(() => {
     (async () => {
       try {
@@ -35,32 +28,17 @@ export default function Perguntas() {
     })();
   }, []);
 
-  const onEdit = (perguntaEdit: Pergunta) => {
-    if (perguntaEdit.id) {
-      setPergunta(perguntaEdit);
-    }
-  };
-
   function onDelete(id: string) {
     return async () => {
       try {
-        const resp = await fetch(`http://localhost:4000/pergunta/${id}`, {
+        await fetch(`http://localhost:4000/pergunta/${id}`, {
           method: "DELETE",
+          credentials: "include",
         });
-        console.log(resp);
-        if (resp.status === 200) {
-        } else {
-          console.error("Falha ao deletar pergunta");
-        }
       } catch (error) {
-        console.error("Erro ao deletar pergunta");
+        console.error(error);
       }
     };
-  }
-
-  function handleModalSubmit() {
-    const label = document.getElementById("my-drawer-4") as HTMLElement;
-    label.click();
   }
 
   return (
@@ -77,7 +55,7 @@ export default function Perguntas() {
         <table className="table">
           <thead>
             <tr>
-              <th>Nome</th>
+              <th>Título</th>
             </tr>
           </thead>
           <tbody>
@@ -85,47 +63,18 @@ export default function Perguntas() {
               <tr key={p.id}>
                 <td>{p.pergunta}</td>
                 <th className="flex justify-end gap-2">
-                  <label
-                    htmlFor="my-drawer-4"
-                    className="btn btn-ghost btn-xs"
-                    onClick={() => onEdit(p)}
-                    onKeyDown={() => onEdit(p)}
-                  >
-                    details
-                  </label>
                   <button
                     className="btn btn-error btn-xs"
                     onClick={onDelete(p.id)}
                     type="button"
                   >
-                    delete
+                    Remover
                   </button>
                 </th>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="drawer drawer-end w-fit">
-        <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-side z-9999">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          />
-          <ul className="menu w-fit min-h-full bg-gray-800 text-base-content">
-            <ModalCreateQuiz
-              tipo="update"
-              id={pergunta.id}
-              pergunta={pergunta.pergunta}
-              alternativas={pergunta.alternativas}
-              titleForms="Editar pergunta"
-              modal={true}
-              onClose={handleModalSubmit}
-            />
-          </ul>
-        </div>
       </div>
     </div>
   );

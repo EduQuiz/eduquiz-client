@@ -17,12 +17,6 @@ const CardQuiz: React.FC<{
           </button>
         </Link>
 
-        <Link href={`/questionario/${id}`}>
-          <button className="btn" type="button">
-            Editar
-          </button>
-        </Link>
-
         <Link href={`/responder/${id}`}>
           <button className="btn" type="button">
             Responder

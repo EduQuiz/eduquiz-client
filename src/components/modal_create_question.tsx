@@ -1,55 +1,33 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-
-interface Props {
-  id: string;
-  pergunta: string;
-  alternativas: Alternativa[];
-  titleForms: string;
-  modal: boolean;
-  tipo: "create" | "update";
-  onClose: () => void;
-}
+import { useRouter } from "next/router";
+import { type ChangeEvent, useState } from "react";
+import { sendJson } from "../utils/sendJson";
 
 interface Pergunta {
-  id: string;
   pergunta: string;
   alternativas: Alternativa[];
 }
 
 interface Alternativa {
-  id: string;
+  ordem: number;
   alternativa: string;
-  correta: boolean;
 }
 
-export default function ModalCreateQuiz(props: Props) {
+export default function ModalCreateQuiz() {
+  const router = useRouter();
+
   const [pergunta, setPergunta] = useState<Pergunta>({
-    id: "",
     pergunta: "",
     alternativas: [],
   });
 
   const [alternativas, setAlternativas] = useState<Alternativa[]>([
-    { id: "", alternativa: "", correta: false },
-    { id: "", alternativa: "", correta: false },
-    { id: "", alternativa: "", correta: false },
-    { id: "", alternativa: "", correta: false },
+    { ordem: 1, alternativa: "" },
+    { ordem: 2, alternativa: "" },
+    { ordem: 3, alternativa: "" },
+    { ordem: 4, alternativa: "" },
   ]);
 
-  useEffect(() => {
-    if (props.id) {
-      const perguntaEdit: Pergunta = {
-        id: props.id,
-        pergunta: props.pergunta,
-        alternativas: props.alternativas,
-      };
-
-      setAlternativas(perguntaEdit.alternativas);
-      setPergunta(perguntaEdit);
-    }
-  }, [props.id, props.pergunta, props.alternativas]);
+  const [radio, setRadio] = useState<number>(1);
 
   function handleRespostaChange(index: number, description: string) {
     const updatedRespostas = [...alternativas];
@@ -57,67 +35,30 @@ export default function ModalCreateQuiz(props: Props) {
     setAlternativas(updatedRespostas);
   }
 
-  function handleRespostaCheckboxChange(index: number) {
-    const updatedRespostas = [...alternativas];
-    updatedRespostas[index].correta = !updatedRespostas[index].correta;
-    setAlternativas(updatedRespostas);
-  }
-
-  function validateAnswers(respostas: Alternativa[]): boolean {
-    const trueAnswersCount = respostas.filter(
-      (resposta) => resposta.alternativa,
-    ).length;
-    return trueAnswersCount === 1;
-  }
-
   async function onSubmit() {
-    const isValid = validateAnswers(alternativas);
+    const perguntaSubmit = {
+      ...pergunta,
+      alternativas: alternativas.map((a) => ({
+        alternativa: a.alternativa,
+        correta: a.ordem === radio,
+      })),
+    };
 
-    if (isValid) {
-      const perguntaSubmit: Pergunta = {
-        ...pergunta,
-        alternativas: alternativas.filter(
-          (alternativa) => alternativa.alternativa,
-        ),
-      };
+    sendJson("pergunta", perguntaSubmit);
 
-      if (props.tipo === "create") {
-        const resp = await axios.post(
-          "http://localhost:4000/pergunta",
-          perguntaSubmit,
-        );
-      } else {
-        const resp = await axios.post(
-          "http://localhost:4000/pergunta/update",
-          perguntaSubmit,
-        );
-      }
-
-      props.onClose();
-      window.location.href = "/perguntas";
-      // toastEmitted(["Pergunta salvada com sucesso"], "success");
-    } else {
-      // toastEmitted(["Selecione uma resposta correta"], "warning");
-    }
+    router.push("/perguntas");
   }
+
+  const handleRadio = (e: ChangeEvent<HTMLInputElement>) => {
+    setRadio(Number.parseInt(e.target.value));
+  };
 
   return (
-    <div
-      className={` ${
-        !props.modal ? "w-full px-14 flex flex-col gap-6 mt-6 h-full" : ""
-      }`}
-    >
+    <div className="m-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">{props.titleForms}</h1>
-        {props.modal && (
-          <IoMdCloseCircleOutline
-            className="text-2xl cursor-pointer"
-            onClick={() => {
-              props.onClose();
-            }}
-          />
-        )}
+        <h1 className="text-2xl font-bold">Criar nova pergunta</h1>
       </div>
+
       <div className="w-full flex justify-between align-center gap-12">
         <div className="form-control w-full max-w-xl ">
           <label className="label" htmlFor="pergunta">
@@ -134,32 +75,38 @@ export default function ModalCreateQuiz(props: Props) {
           />
         </div>
       </div>
+
       <div className="w-full flex justify-between align-center gap-2 flex-col">
         {alternativas.map((resposta, index) => (
           <div
-            key={resposta.id}
+            key={resposta.ordem}
             className="w-full flex justify-between align-center gap-12"
           >
             <div className="form-control w-full max-w-full">
-              <label className="label">
-                <span className="label-text">{`Resposta ${index + 1}`}</span>
-              </label>
+              <div className="flex">
+                <label className="label">
+                  <span className="label-text">{`Alternativa ${index + 1}`}</span>
+                </label>
+                <div className="form-control self-center">
+                  <label className="label">
+                    <span className="m-3 label-text">Correta</span>
+                    <input
+                      className="radio"
+                      type="radio"
+                      id={resposta.ordem.toString()}
+                      value={resposta.ordem.toString()}
+                      checked={radio === resposta.ordem}
+                      onChange={handleRadio}
+                      name="correta"
+                    />
+                  </label>
+                </div>
+              </div>
               <textarea
                 value={resposta.alternativa}
                 className="textarea text-xs textarea-bordered h-24"
                 onChange={(e) => handleRespostaChange(index, e.target.value)}
               />
-            </div>
-            <div className="form-control self-end">
-              <label className="label cursor-pointer">
-                <span className="label-text">Resposta correta</span>
-                <input
-                  type="checkbox"
-                  checked={resposta.correta}
-                  className="checkbox text-xs checkbox-primary"
-                  onChange={() => handleRespostaCheckboxChange(index)}
-                />
-              </label>
             </div>
           </div>
         ))}
