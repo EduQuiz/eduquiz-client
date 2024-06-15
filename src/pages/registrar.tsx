@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { setCookie } from "nookies";
 import { type FormEventHandler, useState } from "react";
 import Toast from "../components/toast";
 import { sendJson } from "../utils/sendJson";
+import { useRouter } from "next/router";
 
 export default function Registrar() {
+  const router = useRouter();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -19,13 +21,7 @@ export default function Registrar() {
     });
 
     if (id) {
-      setCookie(undefined, "user_id", id, {
-        maxAge: 60 * 30 * 1, // half hour
-      });
-
-      setCookie(undefined, "usuario", id);
-
-      document.location = "/";
+      router.push("/");
     } else {
       setErrorText("Erro backend.");
       setError(true);
