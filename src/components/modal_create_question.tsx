@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { sendJson } from "../utils/sendJson";
 
 interface Pergunta {
@@ -10,7 +10,6 @@ interface Pergunta {
 interface Alternativa {
   ordem: number;
   alternativa: string;
-  correta: boolean;
 }
 
 export default function ModalCreateQuiz() {
@@ -22,11 +21,13 @@ export default function ModalCreateQuiz() {
   });
 
   const [alternativas, setAlternativas] = useState<Alternativa[]>([
-    { ordem: 1, alternativa: "", correta: false },
-    { ordem: 2, alternativa: "", correta: false },
-    { ordem: 3, alternativa: "", correta: false },
-    { ordem: 4, alternativa: "", correta: false },
+    { ordem: 1, alternativa: "" },
+    { ordem: 2, alternativa: "" },
+    { ordem: 3, alternativa: "" },
+    { ordem: 4, alternativa: "" },
   ]);
+
+  const [radio, setRadio] = useState<number>(1);
 
   function handleRespostaChange(index: number, description: string) {
     const updatedRespostas = [...alternativas];
@@ -36,7 +37,7 @@ export default function ModalCreateQuiz() {
 
   function handleRespostaCheckboxChange(index: number) {
     const updatedRespostas = [...alternativas];
-    updatedRespostas[index].correta = !updatedRespostas[index].correta;
+    //updatedRespostas[index].correta = !updatedRespostas[index].correta;
     setAlternativas(updatedRespostas);
   }
 
@@ -45,7 +46,7 @@ export default function ModalCreateQuiz() {
       ...pergunta,
       alternativas: alternativas.map((a) => ({
         alternativa: a.alternativa,
-        correta: a.correta,
+        correta: a.ordem === radio,
       })),
     };
 
@@ -53,6 +54,10 @@ export default function ModalCreateQuiz() {
 
     router.push("/perguntas");
   }
+
+  const handleRadio = (e: ChangeEvent<HTMLInputElement>) => {
+    setRadio(parseInt(e.target.value));
+  };
 
   return (
     <div className="m-6">
@@ -64,6 +69,7 @@ export default function ModalCreateQuiz() {
         <div className="form-control w-full max-w-xl ">
           <label className="label" htmlFor="pergunta">
             <span className="label-text">Título da pergunta</span>
+            <span>{radio}</span>
           </label>
           <input
             id="pergunta"
@@ -98,12 +104,24 @@ export default function ModalCreateQuiz() {
                 <span className="label-text">Correta</span>
                 <input
                   type="checkbox"
-                  checked={resposta.correta}
+                  checked={resposta.ordem === radio}
                   className="checkbox text-xs checkbox-primary"
                   onChange={() => handleRespostaCheckboxChange(index)}
                 />
               </label>
             </div>
+
+            <label>
+              Radio
+              <input
+                type="radio"
+                id={resposta.ordem.toString()}
+                value={resposta.ordem.toString()}
+                checked={radio === resposta.ordem}
+                onChange={handleRadio}
+                name="correta"
+              />
+            </label>
           </div>
         ))}
         <button
