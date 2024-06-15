@@ -14,6 +14,7 @@ const QRCode: React.FC = () => {
         src={`https://api.qrserver.com/v1/create-qr-code?size=${size}&data=http://localhost:3000/responder/${id}`}
         alt={`http://localhost:3000/responder/${id}`}
       />
+      <div>{`http://localhost:3000/responder/${id}`}</div>
     </div>
   );
 };
