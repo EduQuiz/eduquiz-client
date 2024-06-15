@@ -41,11 +41,12 @@ export default function ModalCreateQuiz() {
   }
 
   async function onSubmit() {
-    const perguntaSubmit: Pergunta = {
+    const perguntaSubmit = {
       ...pergunta,
-      alternativas: alternativas.filter(
-        (alternativa) => alternativa.alternativa,
-      ),
+      alternativas: alternativas.map((a) => ({
+        alternativa: a.alternativa,
+        correta: a.correta,
+      })),
     };
 
     sendJson("pergunta", perguntaSubmit);
