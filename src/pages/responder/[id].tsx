@@ -109,20 +109,13 @@ const Responder: React.FC = () => {
   return (
     <div>
       <label>
-        Indentificador:
+        Seu nome:
         <input
           value={identificador}
           onChange={(e) => setItendificador(e.target.value)}
           type="text"
         />
       </label>
-
-      <div className="btn">
-        <button type="button" onClick={enviar}>
-          Enviar
-        </button>
-      </div>
-
       <hr />
 
       <Titulo titulo={titulo} />
@@ -140,6 +133,14 @@ const Responder: React.FC = () => {
             }
           />
         ))}
+      </div>
+
+      <hr />
+
+      <div className="btn">
+        <button type="button" onClick={enviar}>
+          Enviar
+        </button>
       </div>
     </div>
   );
