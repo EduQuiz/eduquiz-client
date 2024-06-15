@@ -1,8 +1,8 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { type FormEventHandler, useState } from "react";
 import Toast from "../components/toast";
 import { sendJson } from "../utils/sendJson";
-import { useRouter } from "next/router";
 
 export default function Registrar() {
   const router = useRouter();
