@@ -35,6 +35,8 @@ export default function Perguntas() {
           method: "DELETE",
           credentials: "include",
         });
+
+        setPerguntas((anterior) => anterior.filter((p) => p.id !== id));
       } catch (error) {
         console.error(error);
       }
